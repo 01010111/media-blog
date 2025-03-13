@@ -18,7 +18,7 @@ body {
 	color: var(--text-main);
 
 	margin: auto;
-	padding: 64px 32px;
+	padding: 32px;
 	max-width: 992px;
 
 	font-family: "Nunito", sans-serif;
@@ -157,4 +157,22 @@ panel {
 	flex-direction: column;
 	gap: 8px;
 	border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+	heading {
+		padding: 32px;
+	}
+
+	entry {
+		& info {
+			flex-direction: column;
+			padding: 32px;
+			text-align: center;
+		}
+
+		& comment {
+			padding: 32px;
+		}
+	}
 }
