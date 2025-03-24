@@ -79,21 +79,20 @@ entry {
 			margin-top: -2px;
 			flex-shrink: 0;
 			text-shadow: 0 2px 0 black;
+			height: 20px;
+			background-image: url('images/star.png');
+			background-size: 20px;
 
-			&::before {
-				content: '⭐⭐⭐⭐⭐'
-			}
-
-			&.s0_5	{ max-width: 11px;  }
-			&.s1	{ max-width: 22px;  }
-			&.s1_5	{ max-width: 33px;  }
-			&.s2	{ max-width: 44px;  }
-			&.s2_5	{ max-width: 55px;  }
-			&.s3	{ max-width: 66px;  }
-			&.s3_5	{ max-width: 77px;  }
-			&.s4	{ max-width: 88px;  }
-			&.s4_5	{ max-width: 99px;  }
-			&.s5	{ max-width: 110px; }
+			&.s0_5	{ min-width: 10px;  }
+			&.s1	{ min-width: 20px;  }
+			&.s1_5	{ min-width: 30px;  }
+			&.s2	{ min-width: 40px;  }
+			&.s2_5	{ min-width: 50px;  }
+			&.s3	{ min-width: 60px;  }
+			&.s3_5	{ min-width: 70px;  }
+			&.s4	{ min-width: 80px;  }
+			&.s4_5	{ min-width: 90px;  }
+			&.s5	{ min-width: 100px; }
 		}
 
 		& date {
