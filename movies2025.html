@@ -8,21 +8,6 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 	<script src="app.js" defer></script>
-	<style>
-		year-representation {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			gap: 4px;
-
-			& year {
-				display: block;
-				width: 16px;
-				height: 16px;
-				border: 1px solid var(--text-alt);
-			}
-		}
-	</style>
 </head>
 <body>
 	<panel>
@@ -31,6 +16,68 @@
 			<p>One of my personal goals for 2025 is to watch 100 new movies. I won't be listing previously watched movies here, just new-to-me ones. I'll be rating them as I watch, and I may try to leave a small comment as a review as well.</p>
 			<p>A note about ratings - movies are enjoyable! A rating of 3 stars means I don't regret spending time with a movie. Five stars doesn't mean perfect, just that I enjoyed it enough to rank it among my favorite movies, so I'm hoping there may be some inflation involved, but don't worry about it too much.</p>
 		</div>
+	</panel>
+
+	<panel>
+		<p id="progress-label">Progress:</p>
+		<meta-progress>
+			<watch-progress></watch-progress>
+			<year-progress></year-progress>
+		</meta-progress>
+		<script defer>
+			window.addEventListener('DOMContentLoaded', () => {
+				function getProgressOfYear() {
+					const now = new Date();
+					const startOfYear = new Date(2025, 0, 1); // January 1st of the current year
+					const endOfYear = new Date(2025 + 1, 0, 1); // January 1st of the next year
+					const totalMillisecondsInYear = endOfYear.getTime() - startOfYear.getTime();
+					const elapsedMilliseconds = now.getTime() - startOfYear.getTime();
+					const progress = elapsedMilliseconds / totalMillisecondsInYear;
+
+					return progress;
+				}
+				const el_label = document.querySelector('#progress-label');
+				const el_meta_progress = document.querySelector('meta-progress');
+				const el_year_progress = document.querySelector('year-progress');
+				const el_watch_progress = document.querySelector('watch-progress');
+				const year_progress = Math.min(100, Math.floor(getProgressOfYear() * 100));
+				const watch_progress = document.querySelectorAll('entry:not(.draft)').length;
+				if (year_progress == watch_progress) el_label.innerHTML = `Progress: All caught up with ${watch_progress} movies watched!`;
+				if (year_progress > watch_progress) el_label.innerHTML = `Progress: Lagging behind by ${year_progress - watch_progress} movies!`;
+				if (year_progress < watch_progress) el_label.innerHTML = `Progress: Currently ahead by ${watch_progress - year_progress} movies!`;
+				el_year_progress.setAttribute('percentage', year_progress);
+				el_watch_progress.setAttribute('percentage', Math.floor(100 * Math.min(1, document.querySelectorAll('entry:not(.draft)').length/100)))/100;
+			});
+		</script>
+		<style>
+			meta-progress {
+				width: 100%;
+				height: 12px;
+				position: relative;
+				border-radius: 8px;
+				background-color: #EEE;
+
+				& year-progress {
+					position: absolute;
+					width: 2px;
+					height: 20px;
+					background-color: #666;
+					top: -4px;
+					left: calc(attr(percentage) * 1%);
+					left: attr(percentage %);
+				}
+
+				& watch-progress {
+					position: absolute;
+					background-color: rgb(100, 200, 0);
+					height: 12px;
+					border-radius: 8px;
+					width: min(100%, calc(attr(percentage) * 1%));
+					width: min(100%, attr(percentage %));
+				}
+
+			}
+		</style>
 	</panel>
 
 	<entry
@@ -308,7 +355,7 @@
 	<title-divider class="movie">jan 2025</title-divider>
 
 	<panel>
-		Distribution of Watched Titles by release year:
+		<p>Distribution of Watched Titles by release year:</p>
 		<year-representation></year-representation>
 		<script>
 			var max_year_watch_count = 0;
@@ -335,6 +382,21 @@
 				el.setAttribute('title', `Year: ${el.getAttribute('id')}, Watch count: ${watch_count}`)
 			});
 		</script>
+		<style>
+			year-representation {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				gap: 4px;
+
+				& year {
+					display: block;
+					width: 16px;
+					height: 16px;
+					border: 1px solid var(--text-alt);
+				}
+			}
+		</style>
 	</panel>
 </body>
 </html>

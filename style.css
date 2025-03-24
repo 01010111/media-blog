@@ -25,6 +25,8 @@ body {
 }
 
 panel {
+	box-sizing: border-box;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -148,7 +150,7 @@ title-divider {
 	color: var(--text-alt);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
 	panel {
 		padding: 32px;
 	}
