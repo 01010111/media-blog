@@ -45,8 +45,8 @@
 				if (year_progress == watch_progress) el_label.innerHTML = `Progress: All caught up with ${watch_progress} movies watched!`;
 				if (year_progress > watch_progress) el_label.innerHTML = `Progress: Lagging behind by ${year_progress - watch_progress} movies!`;
 				if (year_progress < watch_progress) el_label.innerHTML = `Progress: Currently ahead by ${watch_progress - year_progress} movies!`;
-				el_year_progress.setAttribute('percentage', year_progress);
-				el_watch_progress.setAttribute('percentage', Math.floor(100 * Math.min(1, document.querySelectorAll('entry:not(.draft)').length/100)))/100;
+				el_year_progress.style.left = `${year_progress}%`;
+				el_watch_progress.style.width = `${Math.floor(100 * Math.min(1, document.querySelectorAll('entry:not(.draft)').length/100))}%`;
 			});
 		</script>
 		<style>
@@ -63,8 +63,6 @@
 					height: 20px;
 					background-color: #666;
 					top: -4px;
-					left: calc(attr(percentage) * 1%);
-					left: attr(percentage %);
 				}
 
 				& watch-progress {
@@ -72,8 +70,6 @@
 					background-color: rgb(100, 200, 0);
 					height: 12px;
 					border-radius: 8px;
-					width: min(100%, calc(attr(percentage) * 1%));
-					width: min(100%, attr(percentage %));
 				}
 
 			}
